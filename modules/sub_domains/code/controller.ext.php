@@ -400,15 +400,10 @@ class module_controller extends ctrl_module
 
     static function getSubDomainUsagepChart()
     {
-		global $controller;
-		$currentuser = ctrl_users::GetUserDetail();
-		$maximum = $currentuser['subdomainquota'];
+        $currentuser = ctrl_users::GetUserDetail();
+        $maximum = $currentuser['subdomainquota'];
         if ($maximum < 0) { //-1 = unlimited
-            if (file_exists(ui_tpl_assetfolderpath::Template() . 'img/misc/unlimited.png')) {
-				return '<img src="' . ui_tpl_assetfolderpath::Template() . 'img/misc/unlimited.png" alt="' . ui_language::translate('Unlimited') . '"/>';
-			} else {
-				return '<img src="modules/' . $controller->GetControllerRequest('URL', 'module') . '/assets/unlimited.png" alt="' . ui_language::translate('Unlimited') . '"/>';
-			}
+            return '<img src="' . ui_tpl_assetfolderpath::Template() . 'img/misc/unlimited.png" alt="' . ui_language::translate('Unlimited') . '"/>';
         } else {
             $used = ctrl_users::GetQuotaUsages('subdomains', $currentuser['userid']);
             $free = max($maximum - $used, 0);
